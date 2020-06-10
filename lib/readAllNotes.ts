@@ -47,7 +47,8 @@ export default async function readAllNotes(
   });
   const notePaths = noteDirectoryEntries
     .filter(entry => entry.isFile() && !entry.name.startsWith("."))
-    .map(entry => path.join(noteFolderPath, entry.name));
+    .map(entry => path.join(noteFolderPath, entry.name))
+    .filter(nodePath => !nodePath.includes("README.md"));
 
   const noteEntries = await Promise.all(
     notePaths.map(async notePath => [notePath, await readNote(notePath)])
